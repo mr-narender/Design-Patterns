@@ -10,10 +10,9 @@ class Summer(metaclass=multimeta):
         print("f,f")
         return x + y
 
-    def addNums(self, f: float, s: str)->float:
+    def addNums(self, f: float, s: str) -> float:
         print('f,s')
-        fsum = f + float(s)
-        return fsum
+        return f + float(s)
 
     def addNums(self, s1: str, s2: str)->float:
         print('s,s')

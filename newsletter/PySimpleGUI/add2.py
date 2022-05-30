@@ -22,7 +22,7 @@ class Mediator:
     # process events from buttons
     def doEvent(self, event, values):
         self.values = values
-        if event ==None:        # window close
+        if event is None:        # window close
             return True         # this makes 'quit' true
         elif event == 'Add':      # add button
             self.addvals()

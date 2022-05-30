@@ -52,7 +52,7 @@ class Builder:
 
     def makeVoters(self,max):
         self.voters=[]
-        for i in range(0, max):
+        for _ in range(max):
             v = Voter(self.candList)
             v.pickCands(10)
             self.voters.append(v)

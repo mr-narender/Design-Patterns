@@ -7,7 +7,7 @@ class Builder():
         dist=1
         while dist > 0:
             dist = int(input('Enter 1 for 100, 5 for 500 or 0 to quit: '))
-            if dist==1 or dist ==5:
+            if dist in {1, 5}:
                 self.evselect(dist)
 
     # seed selected event

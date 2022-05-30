@@ -9,9 +9,8 @@ class Summer():
     def addNums(self, x: float, y: float) ->float:
         return x + y
 
-    def addNums(self, f: float, s: str)->float:
-            fsum = f + float(s)
-            return fsum
+    def addNums(self, f: float, s: str) -> float:
+        return f + float(s)
 #----------------------------------
 def main():
     sumr = Summer()

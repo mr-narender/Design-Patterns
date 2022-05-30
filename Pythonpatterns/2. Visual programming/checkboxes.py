@@ -41,14 +41,11 @@ class InitUI():
         root.geometry("200x175")
 
         boxes=[]            # list of check boxes stored here
-        r = 0
-        for name in self.names:
+        for r, name in enumerate(self.names):
             var=IntVar()                    # create an IntVar for each one
             cb = Checkbox(root, name, var)  # create each checkbox
             boxes.append(cb)                # and add it to the list
             cb.grid(column=0, row=r, sticky=W) # format in grid layout
-            r += 1                            # row counter
-
         #Create the Order button and give it the list of boxes
         OKButton(root, boxes).grid(column=1, row=3, padx=20)
         mainloop()

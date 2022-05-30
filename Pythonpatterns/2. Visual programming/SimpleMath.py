@@ -19,7 +19,7 @@ class Builder():
         try:
             xval= float(self.xEntry.get())
             yval = float(self.yEntry.get())
-            self.cLabel.configure(text="Sum = "+str(xval+yval))
+            self.cLabel.configure(text=f"Sum = {str(xval+yval)}")
         except:
             messagebox.showerror("Conversion error", "Not numbers")
 

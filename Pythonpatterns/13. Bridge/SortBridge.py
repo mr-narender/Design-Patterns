@@ -24,12 +24,8 @@ class SortVisList(Listbox, VisList):
      # sort the data alphabetically
     def sortUpwards(self, prodlist):
         self.prodList = prodlist
-        prods = []
-        # Copy array for sorting
-        for prod in self.prodList:
-           prods.append(prod)
-
-        for i in range(0, len(prods)):
+        prods = list(self.prodList)
+        for i in range(len(prods)):
             for j in range(i, len(prods)):
                 if (prods[i].name > prods[j].name):
                     ptemp = prods[i]

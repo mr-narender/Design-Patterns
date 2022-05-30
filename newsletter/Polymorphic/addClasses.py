@@ -5,8 +5,7 @@ class Summerf():
 
 class Summers():
     def addNums(self, s1: str, s2: str) -> float:
-        fsum = float(s1) + float(s2)
-        return fsum
+        return float(s1) + float(s2)
 
 #----------------------------------
 def main():

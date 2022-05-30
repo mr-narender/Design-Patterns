@@ -36,26 +36,24 @@ Also creates a list containing the checkboxes
 and passes it to the Order button"""
 class InitUI():
     def __init__(self, root):
-        self.names = []
-        self.names.append( "Cheese")
-        self.names.append("Pepperoni")
-        self.names.append("Mushrooms")
-        self.names.append("Sausage")
-        self.names.append("Peppers")
-        self.names.append("Pineapple")
+        self.names = [
+            "Cheese",
+            "Pepperoni",
+            "Mushrooms",
+            "Sausage",
+            "Peppers",
+            "Pineapple",
+        ]
 
         root.title("Pizza")
         root.geometry("200x175")
 
         boxes=[]            # list of check boxes stored here
-        r = 0
-        for name in self.names:
+        for r, name in enumerate(self.names):
             var=IntVar()                    # create an IntVar for each one
             cb = Checkbox(root, name, var)  # create each checkbox
             boxes.append(cb)                # and add it to the list
             cb.grid(column=0, row=r, sticky=W) # format in grid layout
-            r += 1                            # row counter
-
         #Create the Order button and give it the list of boxes
         OKButton(root, boxes).grid(column=1, row=3, padx=20)
 

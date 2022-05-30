@@ -1,10 +1,11 @@
 import csv
 from csv import reader
 
-nm =[]
-nm.append(['Fred', 'Farkel', '1245 Bridge St','Bridgeport', 'CT'])
-nm.append(['Sam', "O'Kelley", '42 Secret Lane', 'Mystic', 'CT'])
-nm.append(["Sarah", 'Smythe', '205 Frazzle Rd, Apt B', 'Fairfield', 'CT'])
+nm = [
+    ['Fred', 'Farkel', '1245 Bridge St', 'Bridgeport', 'CT'],
+    ['Sam', "O'Kelley", '42 Secret Lane', 'Mystic', 'CT'],
+    ["Sarah", 'Smythe', '205 Frazzle Rd, Apt B', 'Fairfield', 'CT'],
+]
 
 #create header text
 header=['frname', 'lname', 'address', 'town', 'state']
@@ -27,10 +28,6 @@ hasHead = sniffer.has_header(
 # now read in the entire file
 with open ('namehlist.csv', newline='') as csvfile:
     addReader = csv.reader(csvfile)
-    rows = []
-    for row in addReader:
-       rows.append(row)
-    headRow = []
-    if hasHead:
-        headRow = rows.pop(0)   #remove from array
+    rows = list(addReader)
+    headRow = rows.pop(0) if hasHead else []
     print(headRow)

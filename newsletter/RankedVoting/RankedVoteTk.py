@@ -71,7 +71,7 @@ class Mediator:
     # create list of voters
     def makeVoters(self,max):
         self.voters=[]
-        for i in range(0, max):
+        for _ in range(max):
             v = Voter(self.candList)
             v.pickCands(10)
             self.voters.append(v)
@@ -103,7 +103,7 @@ class Mediator:
         # clear list box
         self.votesList.delete(0,END)
         for v in self.voteList:
-            self.votesList.insert(END, v.name+' '+str(v.count))
+            self.votesList.insert(END, f'{v.name} {str(v.count)}')
         return self.voteList
 
     # reloads the Treeview with new voters and votes
@@ -119,14 +119,11 @@ class Mediator:
     # loads the Tree
     def loadTree(self):
         voters = self.getVoters()
-        index = 0
-
-        for v in voters:
+        for index, v in enumerate(voters):
             #print(v.cands)
             self.tree.insert("", index,
                              text=str(index),
                              values=(v.cands))
-            index += 1
         self.countVotes()
 
     # remove candidate from all voter's lists

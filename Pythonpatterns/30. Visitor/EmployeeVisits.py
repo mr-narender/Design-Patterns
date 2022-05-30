@@ -169,8 +169,7 @@ class Builder():
 
     # Put employees names in list box
     def loadList(self):
-        employees = []
-        employees.append(Employee("Susan Bear", 55000, 12, 1))
+        employees = [Employee("Susan Bear", 55000, 12, 1)]
         employees.append(Employee("Adam Gehr", 150000, 9, 0))
         employees.append(Employee("Fred Harris", 50000, 15, 2))
         employees.append(Employee("David Oakley", 57000, 12, 2))

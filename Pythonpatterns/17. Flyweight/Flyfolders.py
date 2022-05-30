@@ -18,10 +18,7 @@ class FolderFactory():
         self.unselected = Folder("yellow", canvas)
 
     def getFolder(self, isSelected):
-        if isSelected:
-            return self.selected
-        else:
-            return self.unselected
+        return self.selected if isSelected else self.unselected
 
 #draws a folder
 class Folder():
@@ -120,10 +117,9 @@ class FlyCanvas():
         x = FlyCanvas.LEFT
         self.selectedName = ""  #blank if not in folder
         for nm in self.namelist:
-            if x < evt.x and evt.x < (x+ Folder.W):
-                 if row < evt.y and evt.y < (row+Folder.H):
-                    self.selectedName = nm
-                    found = True
+            if x < evt.x < x + Folder.W and row < evt.y < row + Folder.H:
+                self.selectedName = nm
+                found = True
             j += 1
             x += FlyCanvas.HSPACE
             if j > FlyCanvas.ROWMAX:

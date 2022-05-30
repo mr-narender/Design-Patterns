@@ -51,7 +51,7 @@ class AutoPlayer(Player):
     def playit(self):
         playval = randint(0, 2)
         self.play = Player.moves[playval]
-        self.list.insert(END, self.name + " selects " + self.play)
+        self.list.insert(END, f"{self.name} selects {self.play}")
         self.list.yview(END)
 
 
@@ -69,13 +69,14 @@ class Winner():
         match1 = p1.play + p2.play
         match2 = p2.play + p1.play
         mesg = Winner.game.get(match1)
-        if mesg != None:
-            p1.countWin()
-            return p1.name + " win -- " + mesg
-        else:
+        if mesg is None:
             mesg = Winner.game.get(match2)
             p2.countWin()
-            return p2.name + " win -- " + mesg
+            return f"{p2.name} win -- {mesg}"
+
+        else:
+            p1.countWin()
+            return f"{p1.name} win -- {mesg}"
 
     def findWin(self):
         if self.p1.play == self.p2.play:
@@ -92,7 +93,9 @@ class Builder():
         winner = Winner(self.player1, self.player2)
         self.mesgList.insert(END, winner.findWin())  # print winner
         self.mesgList.yview(END)
-        self.scoreLabel.config(text="You: " + str(self.player1.wincount) + "--- Auto: " + str(self.player2.wincount))
+        self.scoreLabel.config(
+            text=f"You: {str(self.player1.wincount)}--- Auto: {str(self.player2.wincount)}"
+        )
 
     def build(self):
         root = tk.Tk()

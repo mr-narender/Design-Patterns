@@ -2,7 +2,7 @@
 def sqrit(max=0):
     n = 0
     while n < max:
-        yield n*n       # return each result
+        yield n**2
         n += 1          # code resumes here
 
 # call sqrit and iterate up to max

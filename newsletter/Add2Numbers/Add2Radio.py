@@ -65,7 +65,7 @@ class Mediator():
             func = self.funcs.get(self.optval)
 
             # do calculation and display result
-            self.botLabel.configure(text="res = " + str(func()))
+            self.botLabel.configure(text=f"res = {str(func())}")
         except ValueError:
             messagebox.showerror("Conversion error",
                                  "Not numbers")
@@ -81,10 +81,7 @@ class Mediator():
         return self.xval * self.yval
 
     def divfun(self):
-        if self.yval !=0:
-            return self.xval / self.yval
-        else:
-            return None
+        return self.xval / self.yval if self.yval !=0 else None
 
 # Button displays OK
 class CalcButton(DButton):

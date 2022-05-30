@@ -57,9 +57,7 @@ class BuildUI():
     def __init__(self, root, slist):
         self.states = slist
         #create list of names to add to combo box
-        names=[]
-        for s in self.states:
-            names.append(s.getStateName())
+        names = [s.getStateName() for s in self.states]
         #add list to combo box
         self.combo = Combobox(root, values=names)
         self.combo.current(0)

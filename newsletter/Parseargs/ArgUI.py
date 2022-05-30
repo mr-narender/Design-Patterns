@@ -40,15 +40,12 @@ class Opencommand(Menucommand):
         super().__init__(root, label)
 
     def comd(self):
-       fname = ""
-       if len(sys.argv) >1: #get arg from command line
-           fname = sys.argv[1]
-       if not os.path.exists(fname): # if it doesn't exist call Open
-           fname= filedialog.askopenfilename( title="Select file")
-
+        fname = sys.argv[1] if len(sys.argv) >1 else ""
+        if not os.path.exists(fname): # if it doesn't exist call Open
+            fname= filedialog.askopenfilename( title="Select file")
     # display stripped filename in title bar
-       sname = ntpath.basename(fname)
-       self.root.title(sname)
+        sname = ntpath.basename(fname)
+        self.root.title(sname)
 
 
 class Builder():

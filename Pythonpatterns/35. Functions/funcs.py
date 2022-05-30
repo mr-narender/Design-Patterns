@@ -1,12 +1,10 @@
 """Some simple functions"""
 # return a square of the input value
 def sqr(x):
-    y = x * x   #square ihe input
-    return y    #and return it
+    return x * x
 
 def cube(a):
-    b = sqr(a) * a  #compute the cube using the square
-    return b
+    return sqr(a) * a
 
 """main program begins here"""
 def main():

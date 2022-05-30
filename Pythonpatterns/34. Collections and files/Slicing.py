@@ -1,7 +1,7 @@
 # String slicing
 text = "Learn Python"
 # first 3 characters
-print(text[0:3]) #Lea
+print(text[:3])
 #first four (0-4)
 print(text[:4])  #Lear
 # last 4
@@ -12,8 +12,8 @@ ln= len(text)
 print(text[ln-6:ln+1]) #Python
 
 #using stride
-print(text[0:6:1])  #Learn
-print(text[0:6:2])  #Lan
+print(text[:6:1])
+print(text[:6:2])
 
 # reverse a string
 name = "I love Python"
