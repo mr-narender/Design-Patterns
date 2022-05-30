@@ -203,9 +203,12 @@ class Rectangle():
 
     # returns True if x,y is inside the rectangle
     def contains(self, x, y):
-        inside =  self.x-30 <=x and x <= self.x+30 \
-            and self.y-20 <= y and y <= self.y +20
-        return inside
+        return (
+            self.x - 30 <= x
+            and x <= self.x + 30
+            and self.y - 20 <= y
+            and y <= self.y + 20
+        )
 
     # state to selected or not
     def setSelected(self, val):

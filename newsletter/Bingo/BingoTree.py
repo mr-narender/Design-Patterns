@@ -26,15 +26,11 @@ class NBingoCol(BingoCol):
     def __init__(self, name, min,max):
         super().__init__(name,min,max)
     def getRowval(self, i):
-        if(i==2):
-            return "Free"
-        else:
-            return str(self.bara[i])
+        return "Free" if (i==2) else str(self.bara[i])
 
 class Builder():
     def build(self):
-        cols = []
-        cols.append(BingoCol("B", 1, 15))
+        cols = [BingoCol("B", 1, 15)]
         cols.append(BingoCol("I", 16, 30))
         cols.append(NBingoCol("N", 31, 45))
         cols.append(BingoCol("G", 46, 60))
@@ -70,11 +66,9 @@ class Builder():
         tree.heading('G', text='G')
         tree.heading('O', text='O')
 
-        for i in range(0, 5):
-            rowval=""
-            a=[]
-            for r in cols:
-                a.append(r.getRowval(i))
+        rowval=""
+        for i in range(5):
+            a = [r.getRowval(i) for r in cols]
             tree.insert("", 'end', text="", values=(a))
 
 

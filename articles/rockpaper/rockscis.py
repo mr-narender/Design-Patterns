@@ -37,7 +37,7 @@ class AutoPlayer(Player):
         playval = randint(0, 2)     # select 0, 1 or 2
         self.play = Player.moves[playval] # get that play from the tuple
         # print out what it has selected
-        print(self.name + " selects " + self.play)
+        print(f"{self.name} selects {self.play}")
 
 """
 The Winner class checks for ties and looks up the wins
@@ -65,14 +65,13 @@ class Winner():
         match1 = p1.play + p2.play
         match2 = p2.play + p1.play
         mesg = Winner.game.get(match1)
-        if mesg != None:
-            p1.countWin()
-            output = p1.name + " win -- "+mesg
-        else:
+        if mesg is None:
             mesg = Winner.game.get(match2)
             p2.countWin()
-            output =  p2.name + " win -- " + mesg
-        return output
+            return f"{p2.name} win -- {mesg}"
+        else:
+            p1.countWin()
+            return f"{p1.name} win -- {mesg}"
 
     def findWin(self):
         if self.p1.play == self.p2.play:

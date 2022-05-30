@@ -1,10 +1,11 @@
 import csv
 from csv import reader
 
-nm =[]
-nm.append(['Fred', 'Farkel', '1245 Bridge St','Bridgeport', 'CT'])
-nm.append(['Sam', "O'Kelley", '42 Secret Lane', 'Mystic', 'CT'])
-nm.append(["Sarah", 'Smythe', '205 Frazzle Rd, Apt B', 'Fairfield', 'CT'])
+nm = [
+    ['Fred', 'Farkel', '1245 Bridge St', 'Bridgeport', 'CT'],
+    ['Sam', "O'Kelley", '42 Secret Lane', 'Mystic', 'CT'],
+    ["Sarah", 'Smythe', '205 Frazzle Rd, Apt B', 'Fairfield', 'CT'],
+]
 
 # create the csv file
 with open ('namelist.csv', 'w', newline='') as csvfile:

@@ -10,7 +10,4 @@ class AddButterfly(Butterfly):
 
 class Cocoon():
     def getButterfly(self, y:float):
-        if y !=0:
-            return TrigButterfly(y)
-        else:
-            return AddButterfly(y)
+        return TrigButterfly(y) if y !=0 else AddButterfly(y)

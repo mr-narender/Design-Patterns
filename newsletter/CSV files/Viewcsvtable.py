@@ -8,9 +8,7 @@ class ReadCsv:
         # now read in the entire file
         with open(filename, newline='') as csvfile:
             addReader = csv.reader(csvfile)
-            self.rows = []
-            for row in addReader:
-                self.rows.append(row)
+            self.rows = list(addReader)
             self.headRow = self.rows.pop(0)
 
 # Builder creates the GUI
@@ -21,13 +19,10 @@ class Builder:
 
     def loadTree(self):
         rows = self.readCsv.rows
-        index = 0
-
-        for r in rows:
+        for index, r in enumerate(rows):
             self.mainTree.insert("", index,
                              text = r,
                              values = r)
-            index += 1
 
     def build(self):
         root = tk.Tk()

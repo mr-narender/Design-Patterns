@@ -5,9 +5,9 @@ hasStudentId = False
 """Demonstration of elif"""
 if age < 6:
     price = 0    #child is free
-elif age>=6 and age < 60:
+elif age < 60:
     price = 35   #adult price
-elif age >= 60 and age < 80:
+elif age < 80:
     price = 30   #senior
 elif hasStudentId:
     price = 15   #student
@@ -18,23 +18,21 @@ print("price = ", price)
 
 
 
- 
+
 """while loop example"""
-i = 0
 x = 0
-while i < 100:
+for i in range(100):
     x = x + i
-    i += 1
 print ("x=", x)
 
 """for loop examples"""
 array = [5,12,34,57,22,6]
 for x in array:
     print (x)
-    
-for i in range(0,5):
+
+for i in range(5):
     print (i, array[i])
-    
+
 # elif Demo using range method instead
 if age < 6:
     price = 0    #child is free

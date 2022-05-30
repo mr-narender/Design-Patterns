@@ -15,8 +15,7 @@ class Database():
         # create array of table objects
         self.tables = []
         rows = self._cursor.fetchall()
-        for r in rows:
-            self.tables.append(Table(self._cursor, r))
+        self.tables.extend(Table(self._cursor, r) for r in rows)
         return self.tables
 # Query object makes queries and returns Results
 class Query():
@@ -37,7 +36,7 @@ class Table():
         self.cursor = cursor
         self.tname = name[0]    # first of tuple
         # get column names
-        self.cursor.execute("show columns from " + self.tname)
+        self.cursor.execute(f"show columns from {self.tname}")
         self.columns = self.cursor.fetchall()
 
     @property

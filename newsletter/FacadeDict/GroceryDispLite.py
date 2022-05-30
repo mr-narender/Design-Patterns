@@ -30,12 +30,10 @@ class DButton(Button):
         for i in tree.get_children():
             tree.delete(i)
 
-        index=0
-        for row in dictRows:
+        for index, row in enumerate(dictRows):
             tree.insert("", index, text = row.get('foodname'),
                         values=(row.get('storename'),
                                 row.get('price')))
-            index += 1
         """index = 1
         for row in rows:
            tree.insert("", index, text=row[0],
@@ -112,11 +110,7 @@ class Builder():
     # Returns foodname  selected in right list, or "apples" if none selected
     def getFoodname(self):
         index = self.rightlist.curselection()
-        if len(index) >0:
-            foodname:str = self.rightlist.get(index[0])
-        else:
-            foodname ="apples"
-        return foodname
+        return self.rightlist.get(index[0]) if len(index) >0 else "apples"
 
     # return tree for use in query
     def getTree(self):

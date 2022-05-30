@@ -11,7 +11,7 @@ class Singleton:
     # static method declared here
     @staticmethod
     def getInstance():
-        if Singleton.__instance == None:
+        if Singleton.__instance is None:
             Singleton()
         return Singleton.__instance
 
@@ -19,12 +19,13 @@ class Singleton:
         return self.name
 
     def __init__(self, name):
-        if Singleton.__instance != None:
-            raise SingletonException("This class is a singleton!")
-        else:
+        if Singleton.__instance is None:
             Singleton.__instance = self
             self.name = name
-            print("creating: "+ name)
+            print(f"creating: {name}")
+
+        else:
+            raise SingletonException("This class is a singleton!")
 #  ------------------
 def main():
     try:

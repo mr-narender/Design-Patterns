@@ -11,8 +11,7 @@ class AddNums(BoxLayout):
 	# Add click event
 	def bclick(self):
 		val1= float(self.ids.frnum.text)
-		val2 = float(self.ids.secnum.text)
-		self.ids.sumlabel.text = "Sum is: "+ str(val1+val2)
+		self.ids.sumlabel.text = f"Sum is: {str(val1 + float(self.ids.secnum.text))}"
 
 	# Clear button click event
 	def cclick(self):

@@ -1,6 +1,6 @@
 import random
 
-for i in range(0,5):
+for _ in range(5):
     num = random.randint(1, 15)
     print(num, end=" ")
 print()

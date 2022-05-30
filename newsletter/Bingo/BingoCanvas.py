@@ -20,10 +20,7 @@ class NBingoCol(BingoCol):
     def __init__(self, name, min,max):
         super().__init__(name,min,max)
     def getRowval(self, i):
-        if(i==2):
-            return "Free"
-        else:
-            return str(self.bara[i])
+        return "Free" if (i==2) else str(self.bara[i])
 
 class Builder():
 
@@ -33,12 +30,12 @@ class Builder():
         x = y = EDGE
         WIDTH = 50
         # draw grid lines
-        for i in range(0,7):
+        for _ in range(7):
             self.canvas.create_line(x, y, x+5*WIDTH, y, fill='black')
             y=y+WIDTH
         self.canvas.update()
         x = y = EDGE
-        for i in range(0,6):
+        for _ in range(6):
             self.canvas.create_line(x, y, x, y+6*WIDTH, fill='black')
             x += WIDTH
 
@@ -53,7 +50,7 @@ class Builder():
         # fill in numbers
         x = EDGE+WIDTH/2
         y = EDGE+WIDTH+WIDTH/2
-        for i in range(0, 5):
+        for i in range(5):
             for r in self.cols:
                 self.canvas.create_text(x, y, fill="black",
                                         font="Times 20",

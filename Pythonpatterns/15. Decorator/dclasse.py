@@ -5,8 +5,7 @@ class Employee:
         self.idnum = idnum
 
     def nameString(self):
-        return self.frname+" "+self.lname\
-               +" "+str(self.idnum)
+        return (f"{self.frname} {self.lname}" + " ") + str(self.idnum)
 
 class Employee2:
     def __init__(self, frname: str, lname: str, idnum: int,
@@ -19,8 +18,7 @@ class Employee2:
         self.zip = zip
 
     def nameString(self):
-        return self.frname + " " + self.lname \
-               + " " + str(self.idnum)
+        return (f"{self.frname} {self.lname}" + " ") + str(self.idnum)
 
 def main():
     emp = Employee('Sarah', 'Smythe', 123)

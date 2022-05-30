@@ -22,14 +22,10 @@ class NBingoCol(BingoCol):
 
     # return number except for row 2
     def getRowval(self, i):
-        if(i==2):
-            return "Free"
-        else:
-            return str(self.bara[i])
+        return "Free" if (i==2) else str(self.bara[i])
 def main():
 
-    cols=[]
-    cols.append(BingoCol("B", 1, 15))
+    cols = [BingoCol("B", 1, 15)]
     cols.append(BingoCol("I", 16, 30))
     cols.append(NBingoCol("N", 31, 45))
     cols.append(BingoCol("G", 46, 60))
@@ -38,7 +34,7 @@ def main():
     for r in cols:
         print(f"{r.name:>8s}", end="")
     print()
-    for i in range(0,5):
+    for i in range(5):
         for r in cols:
             print(f"{r.getRowval(i):>8s}", end="")
         print()

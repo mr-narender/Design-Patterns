@@ -30,14 +30,14 @@ class SqltTable(Table):
 
     # creates the sql to make the columns--Sqlite differs slightly
     def addRows(self, varnames):
-        qry = "insert into "+self.tname +"("
+        qry = f"insert into {self.tname}("
         i = 0
-        for i in range(0, len(self.colList)-1):
+        for i in range(len(self.colList)-1):
             c = self.colList[i]
-            qry += c.name + ","
+            qry += f"{c.name},"
 
-        qry += self.colList[-1].name+") values ("
-        for i in range(0, len(self.colList) - 1):
+        qry += f"{self.colList[-1].name}) values ("
+        for _ in range(len(self.colList) - 1):
             qry += "?,"
         qry +="?);"
 
@@ -48,9 +48,9 @@ class SqltTable(Table):
 
     # creates the table and columns
     def create(self):
-        sql = "create table " +  self.name + " ("
+        sql = f"create table {self.name} ("
         for col in self.colList:
-            sql += col.getName()+","
+            sql += f"{col.getName()},"
 
         sql += Primary.primaryString
         sql +=");"

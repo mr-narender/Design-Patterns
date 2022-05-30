@@ -48,7 +48,7 @@ class AddFrame(wx.Frame):
         try:
             value1 = float(self.num1.GetValue())
             value2 = float(self.num2.GetValue())
-            self.sumLabel.SetLabel("The sum is: " + str(value1 + value2))
+            self.sumLabel.SetLabel(f"The sum is: {str(value1 + value2)}")
         except ValueError:
             self.sumLabel.SetLabel("Not numbers")
 

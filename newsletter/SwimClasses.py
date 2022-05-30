@@ -6,13 +6,11 @@ class Event():
     def __init__(self, filename, lanes):
         self.numLanes = lanes
         self.swimmers=[]        #array of swimmers
-        # read in the data file for this event
-        f = open(filename, "r")
-        # the Swimmer class parses each line of the data file
-        for swstring in f:
-            sw = Swimmer(swstring)
-            self.swimmers.append(sw)
-        f.close()
+        with open(filename, "r") as f:
+            # the Swimmer class parses each line of the data file
+            for swstring in f:
+                sw = Swimmer(swstring)
+                self.swimmers.append(sw)
     #place holders to be filled in in actual classes
     def getSeeding(self): pass
     def isPrelim(self): pass
@@ -49,9 +47,7 @@ class StraightSeeding(Seeding):
     #loads the swmrs array and sorts it
         asw = self.sortUpwards()  # number in last heat
         self.lastHeat = self.count % self.numLanes
-        if (self.lastHeat < 3):
-            self.lastHeat = 3 # last heat must have 3 or more
-
+        self.lastHeat = max(self.lastHeat, 3)
         lastLanes =self.count - self.lastHeat
         self.numHeats = self.count / self.numLanes
 
@@ -61,9 +57,7 @@ class StraightSeeding(Seeding):
 
         # place heat and lane in each swimmer's object
         j = 0
-          # load from fastest to slowest
-          # so we start with last heat  # and work downwards
-        for i in range(0, lastLanes) :
+        for i in range(lastLanes):
             sw = asw[i] # get each swimmer
             sw.lane= int(self.lanes[j]) # copy in lane
             j += 1
@@ -81,20 +75,14 @@ class StraightSeeding(Seeding):
              sw.lane= int(self.lanes[j])
              j += 1
              sw.heat= int(heats)
-
     # copy from array back into list
-        swimmers = []
-        for i in range(0, self.count):
-            swimmers.append(asw[i]);
+        swimmers = [asw[i] for i in range(self.count)]
 
     # Sorts the swimmers by seed time
     def sortUpwards(self):
-        swmrs = []
+        swmrs = list(self.swimmers)
 
-        for swmr in self.swimmers:
-           swmrs.append(swmr)
-
-        for i in range(0, self.count):
+        for i in range(self.count):
             for j in range(i, self.count):
                 if (swmrs[i].time > swmrs[j].time):
                     swtemp = swmrs[i]
@@ -113,7 +101,7 @@ class StraightSeeding(Seeding):
         incr = 1
         ln = mid
 
-        for i in range(0, self.numLanes):
+        for _ in range(self.numLanes):
             lanes.append(ln)
             ln = mid + incr
             incr = - incr
@@ -136,14 +124,11 @@ class CircleSeeding(StraightSeeding):
     def seed(self):
         super().seed() # do straight seed as default
         if (self.numHeats >= 2):
-            if (self.numHeats >= 3):
-                circle = 3
-            else:
-                circle = 2
+            circle = 3 if (self.numHeats >= 3) else 2
         i = 0
 
-        for j in range(0, self.numLanes)    :
-            for k in range(0, circle):
+        for j in range(self.numLanes):
+            for k in range(circle):
                 self.swimmers[i].lanes = int(self.lanes[j])
                 self.swimmers[i].heat = int(self.numHeats - k)
                 i += 1
@@ -170,5 +155,5 @@ class Swimmer():
 
     #mConcatenate first and last names
      def getName(self):
-          return self.frname+" "+self.lname #combine names
+         return f"{self.frname} {self.lname}"
 
