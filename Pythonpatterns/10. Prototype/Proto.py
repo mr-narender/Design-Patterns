@@ -68,7 +68,7 @@ class Swimmer():
 
     # mConcatenate first and last names
     def getName(self):
-        return self.frname + " " + self.lname  # combine names
+        return f"{self.frname} {self.lname}"
 
 
 class BuildUI():
@@ -102,12 +102,11 @@ class BuildUI():
         self.swimmers = []  # array of swimmers
         # read in the data file for this event
         datafile = (os.path.join(sys.path[0], 'Swimmers.txt'))
-        f = open(datafile, "r")
-        # the Swimmer class parses each line of the data file
-        for swstring in f:
-            sw = Swimmer(swstring)
-            self.swimmers.append(sw)
-        f.close()
+        with open(datafile, "r") as f:
+            # the Swimmer class parses each line of the data file
+            for swstring in f:
+                sw = Swimmer(swstring)
+                self.swimmers.append(sw)
 
     def refreshLeft(self):
         self.readFile()
@@ -117,8 +116,8 @@ class BuildUI():
     def fillList(self, list, swmrs):
         list.delete(0, END)
         for sw in swmrs:
-             text = sw.getName()+" "+str(sw.age)+" "+sw.seedtime+" "+sw.sex
-             list.insert(END, text)
+            text = f"{sw.getName()} {str(sw.age)} {sw.seedtime} {sw.sex}"
+            list.insert(END, text)
 
     def sexLoad(self):
         swmrs=self.sbySex(self.swmrs)
@@ -135,7 +134,7 @@ class BuildUI():
         self.fillList(self.rightlist, sw)
 
     def sbySex(self, swmrs):
-        for i in range(0, len(swmrs)):
+        for i in range(len(swmrs)):
             for j in range(i, len(swmrs)):
                 if (swmrs[i].sex > swmrs[j].sex):
                     swtemp = swmrs[i]
@@ -149,12 +148,9 @@ class BuildUI():
 
         # Sorts the swimmers by seed time
     def sortUpwards(self):
-        swmrs = []
+        swmrs = list(self.swimmers)
 
-        for swmr in self.swimmers:
-            swmrs.append(swmr)
-
-        for i in range(0, len(swmrs)):
+        for i in range(len(swmrs)):
             for j in range(i, len(swmrs)):
                 if (swmrs[i].time > swmrs[j].time):
                     swtemp = swmrs[i]

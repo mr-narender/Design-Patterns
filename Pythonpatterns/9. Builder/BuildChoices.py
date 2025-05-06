@@ -102,21 +102,15 @@ class CheckboxChoice(MultiChoice):
     def makeUI(self):
         self.boxes = []  # list of check boxes stored here
         self.clearAll()
-        r = 0
-        for name in self.choices:
+        for r, name in enumerate(self.choices):
             var = IntVar()  # create an IntVar
             cb = Checkbox(self.frame, name, var)  # create checkbox
             self.boxes.append(cb)  # add it to list
             cb.grid(column=0, row=r, sticky=W)  # grid layout
-            r += 1
 
      # returns list of selected check boxes
     def getSelected(self):
-        items=[]
-        for b in self.boxes:
-            if b.getVar() > 0:
-                items.append(b.getText())
-        return items
+        return [b.getText() for b in self.boxes if b.getVar() > 0]
         #---------------------------------------
 # This factory makes either a Listbox Choice or a Checkbos Choice frame
 class ChoiceFactory:

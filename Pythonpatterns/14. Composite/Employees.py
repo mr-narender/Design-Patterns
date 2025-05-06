@@ -87,28 +87,21 @@ class Boss(Employee):
 
     #finds child node with matching name
     def getChild(self, name:str):
-        if self.name == name :
+        if self.name == name:
             return self
-        else:
-            found = False
-            index = 0
-            newEmp = None
-            while not found and index < len(self.subordinates) :
-                newEmp = self.subordinates[index]
-                found = newEmp.name == name
+        found = False
+        index = 0
+        newEmp = None
+        while not found and index < len(self.subordinates):
+            newEmp = self.subordinates[index]
+            found = newEmp.name == name
 
-                if not found :
-                    if not newEmp.isleaf:
-                        newEmp = newEmp.getChild(name)
-                    else:
-                        newEmp = None
-                found = newEmp != None
-                index += 1
+            if not found:
+                newEmp = None if newEmp.isleaf else newEmp.getChild(name)
+            found = newEmp != None
+            index += 1
 
-            if found:
-                return newEmp
-            else:
-                return None
+        return newEmp if found else None
 
 #static class used to keep values for recursive calls
 class Tree():
@@ -138,9 +131,8 @@ class Builder():
         advMgr = Boss("Advt_Mgr", 50000)
         marketVP.add(advMgr)
         # add salesmen reporting to Sales Mgr
-        for i in range(0, 6):
-            salesMgr.add(Employee("Sales_" + str(i),
-                    int(30000.0 + random() * 10000)))
+        for i in range(6):
+            salesMgr.add(Employee(f"Sales_{str(i)}", int(30000.0 + random() * 10000)))
         advMgr.add(Employee("Secy", 20000))
         prodMgr = Boss("Prod_Mgr", 40000)
         prodVP.add(prodMgr)
@@ -148,12 +140,10 @@ class Builder():
         prodVP.add(shipMgr)
 
         # Add manufacturing and shipping employees
-        for i in range(0, 4):
-            prodMgr.add(Employee("Manuf_" + str(i),
-                    int(25000 + random() * 5000)))
-        for i in range(0, 4):
-            shipMgr.add(Employee("Ship_Clrk_" + str(i),
-                    int(20000 + random() * 5000)))
+        for i in range(4):
+            prodMgr.add(Employee(f"Manuf_{str(i)}", int(25000 + random() * 5000)))
+        for i in range(4):
+            shipMgr.add(Employee(f"Ship_Clrk_{str(i)}", int(20000 + random() * 5000)))
 
         self.buildUI(boss)
         #boss.getSalaries()

@@ -44,10 +44,7 @@ class Intern(TempEmployee):
 
     # limit intern salary
     def setSalary(self, val):
-        if val > 500:
-            self._salary = 500
-        else:
-            self._salary = val
+        self._salary = min(val, 500)
 
 
 # This creates a small group of Employees

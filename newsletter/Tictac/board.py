@@ -45,10 +45,7 @@ class Board:
                 found = self.board[r][1] == play and self.board[r][2] == play
             if not found:
                 r += 1
-        if found:
-            return r    #return number of winning row
-        else:
-            return -1   #or return -1
+        return r if found else -1
 
     # check all columns
     def checkCols(self):
@@ -63,10 +60,7 @@ class Board:
                 found = self.board[1][c] == play and self.board[2][c] == play
             if not found:
                 c+= 1
-        if found:
-            return c    # return number of winning column
-        else:
-            return -1   # or -1
+        return c if found else -1
 
     # check the left and right diagonal
     def checkDiags(self):
@@ -76,14 +70,10 @@ class Board:
             found = play == self.board[1][1] and play == self.board[2][2]
         if found:
             return 1    # left diagonal
-        else:
-            play = self.board[0][2]
-            if play != ' ':
-                found = self.board[1][1] == play and self.board[2][0] == play
-            if found:
-                return 2    # right diagonal
-            else:
-                return -1   # none fount
+        play = self.board[0][2]
+        if play != ' ':
+            found = self.board[1][1] == play and self.board[2][0] == play
+        return 2 if found else -1
 
 # Mediator controls interactions among UI elements
 class Mediator:
@@ -101,12 +91,9 @@ class Mediator:
 
     # player switches after each play
     def switchPlayer(self):
-        if self.player =='X':
-            self.player = 'O'
-        else:
-            self.player = 'X'
+        self.player = 'O' if self.player =='X' else 'X'
         # show current player in label
-        self.plabel.configure(text='Player: '+self.player)
+        self.plabel.configure(text=f'Player: {self.player}')
 
     # make all squares disabled after win is found
     def disableBoard(self):
@@ -126,7 +113,7 @@ class Mediator:
                 butn['text'] = ' '
     # display winning message
     def mesgWin(self, player, text):
-        messagebox.showinfo(player+" wins", text)
+        messagebox.showinfo(f"{player} wins", text)
         self.disableBoard()
 
     # a button is clicked
@@ -138,12 +125,12 @@ class Mediator:
         won = False
         found = self.board.checkRows()
         if found >= 0:
-            self.mesgWin(self.player, "Row " + str(found) + ' wins')
+            self.mesgWin(self.player, f"Row {str(found)} wins")
             won = True
         if found < 0:
             found = self.board.checkCols()
             if found >=0:
-                self.mesgWin(self.player, "Column " + str(found) + ' wins')
+                self.mesgWin(self.player, f"Column {str(found)} wins")
                 won = True
         if found <0 :
             found = self.board.checkDiags()
@@ -197,8 +184,8 @@ class Builder:
         med = Mediator(root, self.buttons, self.bd)
         med.setPlayer('X')      # start with X as first player
         # create buttons and put in buttons 3x3 array
-        for row in range(0,3):
-            for col in range(0,3):
+        for row in range(3):
+            for col in range(3):
                 b= PlayButton(root, med, row,col)
                 b.grid(row =row,column=col, ipadx=15, ipady=15)
                 self.buttons[row][col]=b

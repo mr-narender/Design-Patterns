@@ -31,9 +31,9 @@ class MainApp(App):
 		self.root.ids.calctext.text = ""
 	def chgSign(self):
 		lbstring = self.getEntry()
-		sign = lbstring[0:1]  # get first char
+		sign = lbstring[:1]
 		if sign.isnumeric():
-			lbstring = " "+lbstring
+			lbstring = f" {lbstring}"
 			sign=" "
 		if sign == "-":
 			sign = " "

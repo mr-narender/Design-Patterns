@@ -9,10 +9,7 @@ Note that the list can be any length
 class Summer():
 
     def addArgs(self, *args):
-        fsum = 0
-        for num in args:
-            fsum += float(num)
-        return fsum
+        return sum(float(num) for num in args)
 
 #----------------------------------
 def main():

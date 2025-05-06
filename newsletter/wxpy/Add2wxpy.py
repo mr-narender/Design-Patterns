@@ -32,7 +32,7 @@ class Mediator():
         try:
             value1 = float(self.num1.GetValue())
             value2 = float(self.num2.GetValue())
-            self.result.SetLabel("The sum is: " + str(value1 + value2))
+            self.result.SetLabel(f"The sum is: {str(value1 + value2)}")
         except ValueError:
             self.result.SetLabel("Not numbers")
 

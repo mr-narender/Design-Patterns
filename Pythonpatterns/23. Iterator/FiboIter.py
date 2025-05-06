@@ -11,15 +11,14 @@ class FiboIter():
 
     # each iteration computes a new value
     def __next__(self):
-        if self.current < 1000:   #but stops at 1000
-            self.secondLast = self.prev  # copy n-1st to secondLast
-            self.prev = self.current     # copy nth to prev
-
-            # compute next x as sum of previous 2
-            self.current = self.prev + self.secondLast
-            return self.current
-        else:
+        if self.current >= 1000:
             raise StopIteration
+        self.secondLast = self.prev  # copy n-1st to secondLast
+        self.prev = self.current     # copy nth to prev
+
+        # compute next x as sum of previous 2
+        self.current = self.prev + self.secondLast
+        return self.current
 
 
 class Starter():

@@ -14,8 +14,8 @@ class Builder():
     # gets the entry field text
     # places it on the cLabel text field
     def getName(self):
-       newName = self.nmEntry.get()
-       self.cLabel.configure(text="Hi "+newName+" boy!")
+        newName = self.nmEntry.get()
+        self.cLabel.configure(text=f"Hi {newName} boy!")
 
     def build(self):
         root = tk.Tk()

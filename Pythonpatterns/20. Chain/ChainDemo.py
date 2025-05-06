@@ -43,7 +43,7 @@ class ImageChain(Canvas, Chain):
 
     def sendToChain(self, mesg:str):
         try:
-            img = Image.open(mesg + ".jpg")
+            img = Image.open(f"{mesg}.jpg")
             self.photoImg = ImageTk.PhotoImage(img)
             self.create_image(0, 0, anchor=NW, image=self.photoImg)
         except:
@@ -86,13 +86,11 @@ class FileList(Listbox, Chain):
             self.insert(END, f)
 
     def sendToChain(self, mesg:str):
-        index = 0
         found = False
-        for f in self.files:
+        for index, f in enumerate(self.files):
             if mesg == f.lower():
                 self.selection_set(index)
                 found = True
-            index += 1
         if not found:
             self.nextChain.sendToChain(mesg)
 

@@ -30,7 +30,7 @@ class Mediator():
         try:
             xval = float(self.xEntry.get())
             yval = float(self.yEntry.get())
-            self.botLabel.configure(text="Sum = " + str(xval + yval))
+            self.botLabel.configure(text=f"Sum = {str(xval + yval)}")
         except ValueError:
             messagebox.showerror("Conversion error",
                                  "Not numbers")

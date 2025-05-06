@@ -32,7 +32,7 @@ class Swimmer():
             self.time = float(self.seedtime)
 
     def getName(self):
-        return self.frname + " " + self.lname
+        return f"{self.frname} {self.lname}"
 
 
 # Array of swimmers that is displayed on the left
@@ -40,25 +40,18 @@ class Swimmers():
     def __init__(self, filename):
         self.swimmers = []
 
-        # read in the data file for this event
-        f = open(filename, "r")
-        # the Swimmer class parses each line of the data file
-        for swstring in f:
-            sw = Swimmer(swstring)
-            self.swimmers.append(sw)
-        f.close()
-
+        with open(filename, "r") as f:
+            # the Swimmer class parses each line of the data file
+            for swstring in f:
+                sw = Swimmer(swstring)
+                self.swimmers.append(sw)
         # creates a set of club names
         # using the set to eliminate duplicates
-        self.clubs = set()
-        for sw in self.swimmers:
-            self.clubs.add(sw.club)
+        self.clubs = {sw.club for sw in self.swimmers}
 
     # gets an array of clubs and sorts it
     def getClubs(self):
-        clubnames = []
-        for c in self.clubs:
-            clubnames.append(c)
+        clubnames = list(self.clubs)
         clubnames.sort(reverse=False)
         return clubnames
 
@@ -85,12 +78,11 @@ class SwmrIter():
         found = False
         while not found and self.index < len(self.swmrs):
             swm = self.swmrs[self.index]
+            self.index += 1
             if swm.club == self.club:
                 found = True
-                self.index += 1
                 return swm.getName()
             else:
-                self.index += 1
                 found = False
         raise StopIteration
 
@@ -105,7 +97,7 @@ class Builder():
         swlist = Listbox(root, width=25)
         slist = self.swmrs.getSwimmers()
         for sw in slist:
-            swlist.insert(END, sw.frname + " " + sw.lname + "   " + sw.club)
+            swlist.insert(END, f"{sw.frname} {sw.lname}   {sw.club}")
         swlist.grid(row=0, column=0, rowspan=4, padx=10)
 
         self.combo = Combobox(root)

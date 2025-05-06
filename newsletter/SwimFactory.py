@@ -25,8 +25,17 @@ class BuildUI():
         self.swlist.delete(0, END)      #clear the listbox
         #load new values into list box
         for sw in swmrs:
-           self.swlist.insert(END, str(sw.heat)+" "+ str(sw.lane)+" "
-                              + sw.getName()+" "+ str(sw.age)+ " "+sw.seedtime)
+            self.swlist.insert(
+                END,
+                (
+                    (
+                        ((f"{str(sw.heat)} {str(sw.lane)} " + sw.getName()) + " ")
+                        + str(sw.age)
+                        + " "
+                    )
+                    + sw.seedtime
+                ),
+            )
 
     #creates the two listbox user interface
     def build(self):

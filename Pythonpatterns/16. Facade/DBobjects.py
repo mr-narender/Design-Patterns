@@ -72,14 +72,12 @@ class VariableQuery():
 
     # copies master and inserts arguments into it
     def insertArgs(self, *args):
-        index = 0
         self.qstring = self.qstringMaster
         # replaces ?0, ?1 etc with the provided args
         # to create a revised query
-        for arg in args:
-            tempstr = "?" + str(index)
+        for index, arg in enumerate(args):
+            tempstr = f"?{str(index)}"
             self.qstring = self.qstring.replace(tempstr, "'" + arg + "'")
-            index += 1
 
     # executes the query and returns all the results
     def execute(self):
@@ -111,9 +109,9 @@ class Intcol(Column)  :
         self._primary = primary
 
     def getName(self):
-        idname = self.name+" INT NOT NULL "
+        idname = f"{self.name} INT NOT NULL "
         if self._primary:
-            Primary.primaryString = ("PRIMARY KEY (" + self.name + ")")
+            Primary.primaryString = f"PRIMARY KEY ({self.name})"
         return idname
 # Float col
 class Floatcol(Column):
@@ -121,16 +119,14 @@ class Floatcol(Column):
         super().__init__(name)
 
     def getName(self):
-        idname =  self.name + " FLOAT NOT NULL "
-        return idname
+        return f"{self.name} FLOAT NOT NULL "
 # character column - length is  the 2nd argument
 class Charcol(Column):
     def __init__(self, name, width:int):
         super().__init__(name)
         self.width=width
     def getName(self):
-        idname =  self.name + " VARCHAR("+str(self.width)+") NULL "
-        return idname
+        return f"{self.name} VARCHAR({str(self.width)}) NULL "
 
 class Table():
     def __init__(self, db, name):
@@ -153,8 +149,7 @@ class Table():
 
     # get contents of a column
     def getColumnContents(self, cname):
-        query = Query(self.cursor, "select " + cname + " from "
-                      + self.tname[0])
+        query = Query(self.cursor, (f"select {cname} from " + self.tname[0]))
         results = query.execute()
         return results.getRows()
 
@@ -164,13 +159,13 @@ class Table():
 
     # creates the sql to make the columbs
     def addRows(self, varnames):
-        qry = "insert into "+self.tname +"("
+        qry = f"insert into {self.tname}("
         i = 0
-        for i in range(0, len(self.colList)-1):
+        for i in range(len(self.colList)-1):
             c = self.colList[i]
-            qry += c.name + ","
-        qry += self.colList[-1].name+") values ("
-        for i in range(0, len(self.colList) - 1):
+            qry += f"{c.name},"
+        qry += f"{self.colList[-1].name}) values ("
+        for _ in range(len(self.colList) - 1):
             qry += "%s,"
         qry +="%s)"
         query = Query(self.cursor, qry, varnames)

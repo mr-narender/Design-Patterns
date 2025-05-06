@@ -14,9 +14,5 @@ nuts = {'walnuts', 'pecans'}
 granola = fruit | nuts
 print(granola)
 
-data = set()    # create an empty set
-data.add (2.3)  # and add vales
-data.add (4.6)
-data.add(7.0)
-data.add(2.3)
+data = {2.3, 4.6, 7.0}
 print (data)

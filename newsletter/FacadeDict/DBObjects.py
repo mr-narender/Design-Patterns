@@ -18,11 +18,11 @@ class Database():
         self._db.commit()
 
     def create(self, dbname):
-        self._cursor.execute("drop database if exists "+dbname)
-        self._cursor.execute("Create database "+ dbname)
+        self._cursor.execute(f"drop database if exists {dbname}")
+        self._cursor.execute(f"Create database {dbname}")
         self._dbname = dbname
         #self._db=MySQLdb.connect(self.host, self.userid, self.pwd, dbname)
-        self._cursor.execute("use "+dbname)
+        self._cursor.execute(f"use {dbname}")
         self._cursor= self._db.cursor()
 
     def getName(self):
@@ -37,9 +37,7 @@ class Database():
         res = tquery.execute()
         rows = res.getRows()
         # create array of table objects
-        self.tables = []
-        for r in rows:
-            self.tables.append(Table(self._db, r))
+        self.tables = [Table(self._db, r) for r in rows]
         return self.tables
 
 # base class Column
@@ -75,9 +73,8 @@ class ColumnNames():
             ql = qlist[i].strip().removesuffix(',') #remove trailing commas
             if ql in {'from', 'join', 'where', 'inner'}: #stop on SQL keyword
                 quit = True
-            else:
-                if ql not in {'distinct', 'select'}:
-                    newq.append(ql)  # insert name in column list
+            elif ql not in {'distinct', 'select'}:
+                newq.append(ql)  # insert name in column list
             i += 1
 
         # now remove leading table names
@@ -89,8 +86,7 @@ class ColumnNames():
                 ql = qa[1]          # keep root name
             if ',' in ql:
                 qa = ql.split(',')   # split at comma
-                newq2.append(qa[0])  # when there is no space
-                newq2.append(qa[1])  # between column names
+                newq2.extend((qa[0], qa[1]))
             else:
                 newq2.append(ql)
         return newq2  # return the column name array
@@ -133,14 +129,12 @@ class VariableQuery():
 
     # copies master and inserts arguments into it
     def insertArgs(self, *args):
-        index = 0
         self.qstring = self.qstringMaster
         # replaces ?0, ?1 etc with the provided args
         # to create a revised query
-        for arg in args:
-            tempstr = "?" + str(index)
+        for index, arg in enumerate(args):
+            tempstr = f"?{str(index)}"
             self.qstring = self.qstring.replace(tempstr, "'" + arg + "'")
-            index += 1
 
 
     # executes the query and returns all the results
@@ -175,9 +169,9 @@ class Intcol(Column)  :
         self._primary = primary
 
     def getName(self):
-        idname = self.name+" INT NOT NULL "
+        idname = f"{self.name} INT NOT NULL "
         if self._primary:
-            Primary.primaryString = ("PRIMARY KEY (" + self.name + ")")
+            Primary.primaryString = f"PRIMARY KEY ({self.name})"
         return idname
 # Float col
 class Floatcol(Column):
@@ -185,16 +179,14 @@ class Floatcol(Column):
         super().__init__(name)
 
     def getName(self):
-        idname =  self.name + " FLOAT NOT NULL "
-        return idname
+        return f"{self.name} FLOAT NOT NULL "
 # character column - length is  the 2nd argument
 class Charcol(Column):
     def __init__(self, name, width:int):
         super().__init__(name)
         self.width=width
     def getName(self):
-        idname =  self.name + " VARCHAR("+str(self.width)+") NULL "
-        return idname
+        return f"{self.name} VARCHAR({str(self.width)}) NULL "
 
 class Table():
     def __init__(self, db, name):
@@ -217,8 +209,7 @@ class Table():
 
     # get contents of a column
     def getColumnContents(self, cname):
-        query = Query(self.cursor, "select " + cname + " from "
-                      + self.tname[0])
+        query = Query(self.cursor, (f"select {cname} from " + self.tname[0]))
         results = query.execute()
         return results.getRows()
 
@@ -228,13 +219,13 @@ class Table():
 
     # creates the sql to make the columbs
     def addRows(self, varnames):
-        qry = "insert into "+self.tname +"("
+        qry = f"insert into {self.tname}("
         i = 0
-        for i in range(0, len(self.colList)-1):
+        for i in range(len(self.colList)-1):
             c = self.colList[i]
-            qry += c.name + ","
-        qry += self.colList[-1].name+") values ("
-        for i in range(0, len(self.colList) - 1):
+            qry += f"{c.name},"
+        qry += f"{self.colList[-1].name}) values ("
+        for _ in range(len(self.colList) - 1):
             qry += "%s,"
         qry +="%s)"
         query = Query(self.cursor, qry, varnames)
@@ -257,9 +248,7 @@ class Results():
     # create one dictionary entry
     def makeDictRow(self, row):
         niter = iter(self.cnames)   # iterate through the names
-        dict = {}           #create a dictionary
-        for r in row:
-            dict[next(niter)] = r   # create each dict entry
+        dict = {next(niter): r for r in row}
         self.dictRows.append(dict)  #append each dict row the dict array
 
     def getRows(self):
@@ -282,14 +271,14 @@ class SqltTable(Table):
 
     # creates the sql to make the columns--Sqlite differs slightly
     def addRows(self, varnames):
-        qry = "insert into "+self.tname +"("
+        qry = f"insert into {self.tname}("
         i = 0
-        for i in range(0, len(self.colList)-1):
+        for i in range(len(self.colList)-1):
             c = self.colList[i]
-            qry += c.name + ","
+            qry += f"{c.name},"
 
-        qry += self.colList[-1].name+") values ("
-        for i in range(0, len(self.colList) - 1):
+        qry += f"{self.colList[-1].name}) values ("
+        for _ in range(len(self.colList) - 1):
             qry += "?,"
         qry +="?);"
 
@@ -300,9 +289,9 @@ class SqltTable(Table):
 
     # creates the table and columns
     def create(self):
-        sql = "create table " +  self.name + " ("
+        sql = f"create table {self.name} ("
         for col in self.colList:
-            sql += col.getName()+","
+            sql += f"{col.getName()},"
 
         sql += Primary.primaryString
         sql +=");"
@@ -337,6 +326,5 @@ class SqltDatabase(Database):
         # create array of table objects
         self.tables=[]
         rows = tbQuery.execute().getRows()
-        for r in rows:
-            self.tables.append(SqltTable(self._db, r))
+        self.tables.extend(SqltTable(self._db, r) for r in rows)
         return self.tables

@@ -4,7 +4,7 @@ import dis
 """"List comprehension"""
 
 def comprehend():
-    for i in range(0, 1000000):
+    for _ in range(1000000):
         squares = [value**2 for value in range (1,21)]
         
 
@@ -13,10 +13,8 @@ def comprehend():
 #equivalent code
 
 def fularray():
-    for i in range(0, 1000000):
-        squares = []
-        for value in range(1,21):
-            squares.append(value**2)
+    for _ in range(1000000):
+        squares = [value**2 for value in range(1,21)]
    
 #print (squares)
 

@@ -23,7 +23,7 @@ class Mediator():
             val1 = float(self.num1.text())
             val2 = float(self.num2.text())
             sum = val1 + val2
-            self.sumLabel.setText("The sum is: " + str(sum))
+            self.sumLabel.setText(f"The sum is: {str(sum)}")
         except:
             msgbox = QMessageBox()
             msgbox.setWindowTitle("Conversion error")

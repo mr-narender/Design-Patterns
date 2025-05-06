@@ -75,12 +75,10 @@ class PlotStrategy():
 
     # calculate x pixel position
     def calcx(self,xp):
-        x= (xp - self.minx) * self.xfactor + self.xpmin
-        return x
+        return (xp - self.minx) * self.xfactor + self.xpmin
     # calculate y pixel position
     def calcy(self, yp, h):
-        y = h - (yp - self.miny)*self.yfactor
-        return y
+        return h - (yp - self.miny)*self.yfactor
 
     # read the data file into x and y arrays
     def readFile(self, fname):
@@ -103,11 +101,10 @@ class LineStrategy(PlotStrategy):
         self.calcScale(h, w)
     # Line plot of the two arrays
         coords = []         #array of x,y pairs
-        for i in range(0, len(self.xp)):
+        for i in range(len(self.xp)):
             x = self.calcx(self.xp[i])
             y = self.calcy(self.yp[i], h)
-            coords.append(x)
-            coords.append(y)
+            coords.extend((x, y))
         # lot x,y data
         self.canvas.create_line(coords, fill=self.color)
 
@@ -124,7 +121,7 @@ class BarStrategy(PlotStrategy):
 
         # each bar is a filled rectangles
         ypm = self.ypmax *1.05
-        for i in range(0, len(self.xp)):
+        for i in range(len(self.xp)):
             x = self.calcx(self.xp[i])
             y = self.calcy(self.yp[i], h)
             self.canvas.create_rectangle(x-10, h,

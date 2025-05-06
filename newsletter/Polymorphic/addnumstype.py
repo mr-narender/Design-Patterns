@@ -9,12 +9,8 @@ class Summer():
     def addNumsf(self, x: float, y: float) ->float:
         return x + y
 
-    def addNums(self, f: float, s: str)->float:
-        if type(s) is float:
-            return self.addNumsf(f,s)
-        else:
-            fsum = f + float(s)
-            return fsum
+    def addNums(self, f: float, s: str) -> float:
+        return self.addNumsf(f,s) if type(s) is float else f + float(s)
 
 #----------------------------------
 def main():

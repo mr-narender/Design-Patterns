@@ -32,16 +32,12 @@ ipart = cmplx.imag
 print(r, ipart)
 
 
-x = 2
-temp = 32.0
-z = 9
 y = 12
-x = x + 3   #can also be written as:
+x = 2 + 3
 x += 3      #add 3 to x; store result in x
 
-#also with the other basic operations:
-temp *= 1.80    #mult temp by 1.80
-z -= 7      #subtract 7 from z
+temp = 32.0 * 1.80
+z = 9 - 7
 y /= 1.3        #divide y by 1.3
 
 """add 2 numbers together"""
@@ -67,18 +63,17 @@ print (x)
 
 
 x = 12
-if (0 < x) and ( x <= 24):
+if 0 < x <= 24:
      print ("Time is up")
- 
+
 y = 1
 if ( y > 0 ):
     z = x / y
     print("z = ", z)
-    
 #Python substring using "in"
     if "sam" in "samuel":
         print ("sam is there")
-    
+
 #Python single-line comment
 '''other Python comment style'''
 """ also can go on

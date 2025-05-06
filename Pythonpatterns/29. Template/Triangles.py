@@ -61,11 +61,7 @@ class IsoscelesTriangle(Triangle):
         side1 = self.calcSide(dx1, dy1)
         side2 = self.calcSide(dx2, dy2)
 
-        if (side2 < side1):
-            incr = -1
-        else:
-            incr = 1
-
+        incr = -1 if (side2 < side1) else 1
         slope = dy2 / dx2
         intercept = c.y - slope * c.x
 

@@ -52,10 +52,7 @@ class NamerFactory():
         self.name = namestring
     def getNamer(self):
         i = self.name.find(",") # if it finds a comma
-        if i>0:
-            return LastFirst(self.name) # get the LastFirst class
-        else:
-            return FirstFirst(self.name) # else get the FirstFirst
+        return LastFirst(self.name) if i>0 else FirstFirst(self.name)
 
 
 class Builder:

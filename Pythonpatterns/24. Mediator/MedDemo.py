@@ -119,7 +119,7 @@ class Swimmer():
             self.time = float(self.seedtime)
 
     def getName(self):
-        return self.frname + " " + self.lname
+        return f"{self.frname} {self.lname}"
 
 
 # Array of swimmers that is displayed on the left
@@ -127,13 +127,11 @@ class Swimmers():
     def __init__(self, filename):
         self.swimmers = []
 
-        # read in the data file for this event
-        f = open(filename, "r")
-        # the Swimmer class parses each line of the data file
-        for swstring in f:
-            sw = Swimmer(swstring)
-            self.swimmers.append(sw)
-        f.close()
+        with open(filename, "r") as f:
+            # the Swimmer class parses each line of the data file
+            for swstring in f:
+                sw = Swimmer(swstring)
+                self.swimmers.append(sw)
 
     # returns an array of Swimmers
     def getSwimmers(self):

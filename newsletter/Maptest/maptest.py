@@ -6,11 +6,10 @@ def sq(x):
 
 def f1():
     start = datetime.now()
-    for i in range (0, 1000000):
+    for _ in range(1000000):
         ara=[2,3,6,8,5,4]
         amap = map(sq, ara)
         ara1 = list(amap)
-        #print (ara1)
     endt = datetime.now()
     print("time=", endt-start)
     print(ara1)
@@ -19,12 +18,10 @@ def f1():
         
 def f2():
     start = datetime.now()
-    for i in range (0, 1000000):
-        ara=[2,3,6,8,5,4]
+    ara=[2,3,6,8,5,4]
 
-        amap = []
-        for a in ara:
-            amap.append(sq(a))
+    for _ in range(1000000):
+        amap = [sq(a) for a in ara]
     endt = datetime.now()
     print("time=", endt-start)
     return endt-start

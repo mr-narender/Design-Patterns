@@ -31,7 +31,7 @@ class Mediator():
     # if there is an error the hms error variable is set and
     # the error message is shown from the hms errorMessage
     def startCount(self):
-        entry = self.hrEntry.get()+','+self.mnEntry.get()+","+self.secEntry.get()
+        entry = f'{self.hrEntry.get()},{self.mnEntry.get()},{self.secEntry.get()}'
         hms = Hms(entry)
         if hms.error:
             messagebox.showerror('Error', hms.errorMessage)

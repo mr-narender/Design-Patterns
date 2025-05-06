@@ -116,9 +116,8 @@ class BinCheck(Checkbox, Chain):
 
         if sel.find(nm) >=0:
             messagebox.showinfo("Binary checkbox", "Limits selection to binary files")
-        else:
-            if self.nextChain != None:
-                self.nextChain.sendToChain(evt)
+        elif self.nextChain != None:
+            self.nextChain.sendToChain(evt)
 
 # UI Builder starts here
 class HelpWindow():

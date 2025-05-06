@@ -66,13 +66,11 @@ class Swimmer():
 class Swimmers():
     def __init__(self, filename):
         self.swimmers = []
-        # read in the data file for this event
-        f = open(filename, "r")
-        # the Swimmer class parses each line of the data file
-        for swstring in f:
-            sw = Swimmer(swstring)
-            self.swimmers.append(sw)
-        f.close()
+        with open(filename, "r") as f:
+            # the Swimmer class parses each line of the data file
+            for swstring in f:
+                sw = Swimmer(swstring)
+                self.swimmers.append(sw)
     def getSwimmers(self):
         return self.swimmers
 
@@ -84,7 +82,7 @@ class Sorter():
     def sortby(self, vname):
         # bubble sort on one field
         f = attrgetter(vname) #create function to access field
-        for i in range(0, len(self.swmrs)):
+        for i in range(len(self.swmrs)):
             for j in range(i, len(self.swmrs)):
                 if f(self.swmrs[i]) > f(self.swmrs[j]):
                     temp=self.swmrs[i]
@@ -141,15 +139,12 @@ class Printres:
         self.functions = []
         self.bldr = bldr
         #create list of functions to fetch from Swimmer
-        for v in varlist:
-            self.functions.append(attrgetter(v))
+        self.functions.extend(attrgetter(v) for v in varlist)
     def create(self, swmrs):
-         for sw in swmrs:
-             sline=""
-             for f in self.functions:       # go through functions
-                 sline += str(f(sw)) +"   " # and swimmers
-             self.printList.append(sline)   # save in List
-         self.bldr.setPlist(self.printList)
+        for sw in swmrs:
+            sline = "".join(f"{str(f(sw))}   " for f in self.functions)
+            self.printList.append(sline)   # save in List
+        self.bldr.setPlist(self.printList)
 
 # Parser takes tokens and assigns them
 # to Variable and Verb objects

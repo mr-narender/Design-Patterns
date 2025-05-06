@@ -26,13 +26,10 @@ class BuildUI():
         # self.swlist.delete(0, END)      #clear the listbox
 
         self.swlist.delete(*self.swlist.get_children())
-        #load new values into list box
-        row=1
-        for sw in swmrs:
+        for row, sw in enumerate(swmrs, start=1):
            #self.swlist.insert(END, str(sw.getHeat())+" "+ str(sw.getLane())+" " + sw.getName()+" "+ str(sw.getAge())+ " "+sw.getSeed())
             self.swlist.insert("", row, text=str(sw.heat).strip(),
                                values=(str(sw.lane), sw.getName(), str(sw.age) ,sw.seedtime ))
-            row += 1
     #creates the two listbox user interface
     def build(self):
         self.root.geometry("400x200")

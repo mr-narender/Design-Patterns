@@ -71,11 +71,8 @@ class BuildUI():
         style = ttk.Style()
         style.configure("Treeview.Heading", font=(None, 10, "bold"))
 
-        i=1
-        for state in self.states:
+        for i, state in enumerate(self.states, start=1):
             self.tree.insert("", i, text=state.getStateName(), values=( state.getAbbrev(), state.getCapital(), state.getFounded()))
-            i+=1
-
         self.tree.pack(side=TOP, fill=X)
 
 #----------------------------------

@@ -24,7 +24,7 @@ class ReportButton(DButton) :
         while not quit:
             mesg += (emp.name +"\n")
             emp = emp.parent
-            quit = emp==None or emp.name == "CEO"
+            quit = emp is None or emp.name == "CEO"
         if emp != None:
             mesg += (emp.name +"\n")
             messagebox.showinfo("Report chain", mesg)
@@ -99,28 +99,21 @@ class Boss(Employee):
 
     #finds child node with matching name
     def getChild(self, name:str):
-        if self.name == name :
+        if self.name == name:
             return self
-        else:
-            found = False
-            index = 0
-            newEmp = None
-            while not found and index < len(self.subordinates) :
-                newEmp = self.subordinates[index]
-                found = newEmp.name == name
+        found = False
+        index = 0
+        newEmp = None
+        while not found and index < len(self.subordinates):
+            newEmp = self.subordinates[index]
+            found = newEmp.name == name
 
-                if not found :
-                    if not newEmp.isleaf:
-                        newEmp = newEmp.getChild(name)
-                    else:
-                        newEmp = None
-                found = newEmp != None
-                index += 1
+            if not found:
+                newEmp = None if newEmp.isleaf else newEmp.getChild(name)
+            found = newEmp != None
+            index += 1
 
-            if found:
-                return newEmp
-            else:
-                return None
+        return newEmp if found else None
 
 #static class used to keep values for recursive calls
 class Tree():
@@ -135,13 +128,10 @@ class Tree():
         dict = Tree.tree.item(curitem)
         name = dict["text"]  # get name
 
-        # search for match
-        if name == boss.name:
-            print(name, boss.name)
-            newEmp = boss
-        else:
-            newEmp = self.boss.getChild(name)
-        return newEmp
+        if name != boss.name:
+            return self.boss.getChild(name)
+        print(name, boss.name)
+        return boss
 
 # Creates the employee tree structure
 # salaries are generated partly using random numbers
@@ -165,9 +155,13 @@ class Builder():
         advMgr = Boss(marketVP, "Advt_Mgr", 50000)
         marketVP.add(advMgr)
         # add salesmen reporting to Sales Mgr
-        for i in range(0, 6):
-            salesMgr.add(Employee(salesMgr, "Sales_" + str(i),
-                    int(30000.0 + random() * 10000)))
+        for i in range(6):
+            salesMgr.add(
+                Employee(
+                    salesMgr, f"Sales_{str(i)}", int(30000.0 + random() * 10000)
+                )
+            )
+
         advMgr.add(Employee(advMgr, "Secy", 20000))
         prodMgr = Boss(prodVP,"Prod_Mgr", 40000)
         prodVP.add(prodMgr)
@@ -175,12 +169,15 @@ class Builder():
         prodVP.add(shipMgr)
 
         # Add manufacturing and shipping employees
-        for i in range(0, 4):
-            prodMgr.add(Employee(prodMgr, "Manuf_" + str(i),
-                    int(25000 + random() * 5000)))
-        for i in range(0, 4):
-            shipMgr.add(Employee(shipMgr,"Ship_Clrk_" + str(i),
-                    int(20000 + random() * 5000)))
+        for i in range(4):
+            prodMgr.add(Employee(prodMgr, f"Manuf_{str(i)}", int(25000 + random() * 5000)))
+        for i in range(4):
+            shipMgr.add(
+                Employee(
+                    shipMgr, f"Ship_Clrk_{str(i)}", int(20000 + random() * 5000)
+                )
+            )
+
 
         self.buildUI(boss)
         #boss.getSalaries()

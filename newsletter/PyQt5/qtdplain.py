@@ -36,7 +36,7 @@ class Mediator():
         print(name)
         voice = VoiceButton.voices[VoiceButton.vindex]
         role = RoleButton.roles[RoleButton.rindex]
-        ltext = voice+" "+role+" - "+name
+        ltext = f"{voice} {role} - {name}"
         self.list.addItem(ltext)
         self.entry.setText("")
 

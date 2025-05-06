@@ -13,6 +13,6 @@ window = sg.Window('Adder', layout)
 quit = False
 while not quit:
     event, values = window.read()   # get the event
-    quit = (event == None)    # corner 'X' clicked
+    quit = event is None
 window.close()      # close window
 

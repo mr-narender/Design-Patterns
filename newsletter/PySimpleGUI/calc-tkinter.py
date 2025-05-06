@@ -40,7 +40,7 @@ class Mediator():
         for val in self.array:
             evstring += str(val.numval)
             evstring += val.sign
-        evstring = evstring[0:len(evstring)-1]
+        evstring = evstring[:-1]
         print(evstring)
         """
         self.stack=[]
@@ -83,12 +83,9 @@ class Mediator():
     # it is either a space or a minus sign
     def chgSign(self):
         lbstring = self.getLabelText()
-        sign = lbstring[0:1]    # get first char
+        sign = lbstring[:1]
 
-        if sign == "-":
-            sign = " "
-        else:
-            sign = "-"
+        sign = " " if sign == "-" else "-"
         lbstring = sign + lbstring[1:] # append new sign to rest
         self.setlabelText(lbstring)
 

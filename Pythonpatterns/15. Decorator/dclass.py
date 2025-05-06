@@ -7,8 +7,7 @@ class Employee:
     idnum: int
 
     def nameString(self):
-        return self.frname+" "+self.lname\
-               +" "+str(self.idnum)
+        return (f"{self.frname} {self.lname}" + " ") + str(self.idnum)
 
 @dataclass
 class Employee2:
@@ -20,8 +19,7 @@ class Employee2:
     zip: str = '06820'
 
     def nameString(self):
-        return self.frname + " " + self.lname \
-               + " " + str(self.idnum)
+        return (f"{self.frname} {self.lname}" + " ") + str(self.idnum)
 
 def main():
     emp = Employee('Sarah', 'Smythe', 123)
